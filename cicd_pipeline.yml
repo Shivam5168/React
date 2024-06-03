@@ -20,13 +20,3 @@ stages:
         npm install
         npm run build
       displayName: 'Install dependencies and build React app'
-
-    - task: Docker@2
-      inputs:
-        containerRegistry: '$(dockerRegistryServiceConnection)'
-        repository: 'shivam20022003/react_docker:latest'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
-        tags: |
-          $(Build.BuildId)
-      displayName: 'Build and push Docker image'
