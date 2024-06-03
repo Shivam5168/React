@@ -20,3 +20,9 @@ stages:
         npm install
         npm run build
       displayName: 'Install dependencies and build React app'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation : 'Container'
