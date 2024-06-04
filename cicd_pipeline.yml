@@ -29,9 +29,13 @@ stages:
         displayName: Artifact Publish
 
     - task: AzureStaticWebApp@0
+      displayName: 'Static Web App: '
       inputs:
-        app_location: '/'
-        api_location: 'api'
-        output_location: 'public'
-      env:
-       azure_static_web_apps_api_token: $(token)
+        app_location: /
+        output_location: 'dist'
+        config_file_location: '/src'
+        skip_app_build: true
+        skip_api_build: true
+        is_static_export: false
+        verbose: true
+        azure_static_web_apps_api_token: $(token)
