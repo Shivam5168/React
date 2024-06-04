@@ -28,7 +28,7 @@ stages:
         publishLocation: 'Container'
         displayName: Artifact Publish
 
-    - task: AzureStaticWebApp
+    - task: AzureStaticWebApp@0
       inputs:
         app_location: '/'
         api_location: 'api'
