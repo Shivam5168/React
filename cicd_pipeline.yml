@@ -34,4 +34,4 @@ stages:
         api_location: 'api'
         output_location: 'public'
       env:
-       azure_static_web_app_api_token: $(token)
+       azure_static_web_apps_api_token: $(token)
