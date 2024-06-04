@@ -27,3 +27,11 @@ stages:
         ArtifactName: 'drop'
         publishLocation: 'Container'
         displayName: Artifact Publish
+
+    -task: AzureStaticWebApp
+    inputs:
+      app_location: '/'
+      api_location: 'api'
+      output_location: 'public'
+    env:
+      azure_static_web_app_api_token: $(token)
