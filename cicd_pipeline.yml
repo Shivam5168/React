@@ -14,22 +14,26 @@ stages:
     - task: NodeTool@0
       inputs:
         versionSpec: '18.x'
+        displayName: 'Install Node.js'
     - script: |
         npm install
       displayName: 'Install dependencies React app'
 
 - stage: build
+  dependsOn: install
   jobs:
   - job: Build
     steps:
     - task: NodeTool@0
       inputs:
         versionSpec: '18.x'
+        displayName: 'build Node.js'
     - script: |
         npm run build
-      displayName: 'build React app'
+      displayName: 'Build React app'
 
 - stage: deploy
+  dependsOn: build
   jobs:
   - job: deploy
     steps:
