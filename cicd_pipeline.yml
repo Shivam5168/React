@@ -7,9 +7,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-- stage: npm install
+- stage: install
   jobs:
-  - job: install all packages
+  - job: install
     steps:
     - task: NodeTool@0
       inputs:
@@ -18,7 +18,7 @@ stages:
         npm install
       displayName: 'Install dependencies React app'
 
-- stage: npm build
+- stage: build
   jobs:
   - job: Build
     steps:
