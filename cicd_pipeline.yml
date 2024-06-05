@@ -37,6 +37,5 @@ stages:
         app_location: '/'
         api_location: ''
         output_location: 'build'
-    env:
-      azure_static_web_apps_api_token: $(token)
-      repo_token: $(github_token)
+        azure_static_web_apps_api_token: $(token)
+        repo_token: $(github_token)
