@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-    - master
+      - master
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -19,16 +19,27 @@ stages:
         npm install
         npm run build
       displayName: 'Install dependencies React app'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: '$(Build.SourcesDirectory)/build'
+        artifactName: 'react-build'
+        publishLocation: 'Container'
+      displayName: 'Publish Build Artifacts'
 
 - stage: deploy
   dependsOn: install
   jobs:
   - job: deploy
     steps:
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        artifactName: 'react-build'
+        downloadPath: '$(Build.SourcesDirectory)/build'
+      displayName: 'Download Build Artifacts'
     - task: AzureStaticWebApp@0
       displayName: 'Static Web App: '
       inputs:
-        app_location: '/'
+        app_location: '$(Build.SourcesDirectory)/build'
         api_location: ''
-        output_location: 'build'
+        output_location: ''
         azure_static_web_apps_api_token: $(token)
