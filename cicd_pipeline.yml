@@ -34,7 +34,6 @@ stages:
 #       displayName: 'Build React app'
 
 - stage: deploy
-  dependsOn: build
   jobs:
   - job: deploy
     steps:
