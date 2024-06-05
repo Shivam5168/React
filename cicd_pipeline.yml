@@ -18,24 +18,33 @@ stages:
     - script: |
         npm install
         npm run build
-      displayName: 'Install dependencies React app'
+      displayName: 'Install dependencies and build React app'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: 'build'
+        artifact: 'react-build'
+        publishLocation: 'pipeline'
+      displayName: 'Publish Build Artifacts'
 
 - stage: deploy
-
   dependsOn: install
   jobs:
   - job: deploy
     steps:
+    - script: echo "Starting to download build artifacts"
+      displayName: 'Echo Start Download'
     - task: DownloadPipelineArtifact@2
       inputs:
         artifact: 'react-build'
         paths: 'build'
       displayName: 'Download Build Artifacts'
+    - script: ls -la build
+      displayName: 'List Build Directory'
     - task: AzureStaticWebApp@0
-      displayName: 'Static Web App: '
+      displayName: 'Deploy to Azure Static Web App'
       inputs:
         app_location: '/'
         api_location: ''
         output_location: 'build'
-        azure_static_web_apps_api_token: $(token)
         repo_token: $(github_token)
+        azure_static_web_apps_api_token: $(token)
