@@ -26,11 +26,17 @@ stages:
   jobs:
   - job: deploy
     steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: 'react-build'
+        paths: 'build'
+      displayName: 'Download Build Artifacts'
     - task: AzureStaticWebApp@0
       displayName: 'Static Web App: '
       inputs:
         app_location: '/'
         api_location: ''
         output_location: 'build'
-        repo_token: $(github_token)
-        azure_static_web_apps_api_token: $(token)
+    env:
+      azure_static_web_apps_api_token: $(token)
+      repo_token: $(github_token)
