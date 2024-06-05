@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-      - master
+    - master
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -21,7 +21,7 @@ stages:
       displayName: 'Install dependencies React app'
     - task: PublishBuildArtifacts@1
       inputs:
-        pathToPublish: '$(Build.SourcesDirectory)/build'
+        pathToPublish: '$(Build.SourcesDirectory)'
         artifactName: 'react-build'
         publishLocation: 'Container'
       displayName: 'Publish Build Artifacts'
@@ -34,15 +34,12 @@ stages:
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: 'react-build'
-        downloadPath: '$(Pipeline.Workspace)'
+        downloadPath: '$(Build.SourcesDirectory)'
       displayName: 'Download Build Artifacts'
-    - script: |
-        ls -la $(Pipeline.Workspace)/react-build
-      displayName: 'List downloaded files'
     - task: AzureStaticWebApp@0
-      displayName: 'Static Web App: '
+      displayName: 'Static Web App'
       inputs:
-        app_location: 'react-build'
+        app_location: '$(Build.SourcesDirectory)'
         api_location: ''
         output_location: ''
         azure_static_web_apps_api_token: $(token)
